@@ -1,0 +1,1 @@
+This repository implements an approach for balancing a trade flow matrix based on multilayer complex networks. It allows the usage of several different centrality measures such as betweenness or closeness centrality.
