@@ -109,3 +109,6 @@ venv.bak/
 # data
 .csv
 test.png
+
+# pathpy
+pathpy_multiplex2/
