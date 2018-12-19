@@ -105,3 +105,7 @@ venv.bak/
 
 # VS COde
 .vscode
+
+# data
+.csv
+test.png
