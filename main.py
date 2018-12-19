@@ -39,7 +39,7 @@ def read_normalized_data(filename):
     country_2 = df[['NW_X', 'TV_X', 'UV_X']]
     
     deltas = np.zeros(country_1.shape[0])
-    df['delta'] = 0
+    
     # calculate the cosine similarity of the reported trade values
     for i in range(country_1.shape[0]):
         cos_theta = cosine_similarity(country_1.values[i], country_2.values[i])
@@ -49,6 +49,9 @@ def read_normalized_data(filename):
     return df
 #%%
 def write_edge_list(df, edge_filename):
+    """
+    writes a given pandas dataframe and writes the required columns to an csv edgelist
+    """
     df.to_csv(edge_filename, index = False, columns = ['rtCode', 'ptCode', 'delta'])
 #%%
 data_frame_with_deltas = read_normalized_data("56.2013 basicVal.csv")
