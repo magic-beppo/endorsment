@@ -1,10 +1,15 @@
 #%%
 import matplotlib as mpl
 mpl.use('TkAgg')
+import matplotlib.pyplot as plt
+
 import pathpy as pp
+
 import pandas as pd
 import numpy as np
+import scipy.sparse as sp
 # from  sklearn.metrics.pairwise import cosine_similarity
+
 
 """
 calculate the eigenvector centrality of the weighted differences in reported trade volume 
@@ -53,17 +58,32 @@ def write_edge_list(df, edge_filename):
     writes a given pandas dataframe and writes the required columns to an csv edgelist
     """
     df.to_csv(edge_filename, index = False, columns = ['rtCode', 'ptCode', 'delta'])
+    return df[['rtCode', 'ptCode', 'delta']]
 #%%
 data_frame_with_deltas = read_normalized_data("56.2013 basicVal.csv")
-write_edge_list(data_frame_with_deltas, "test.csv")
+edges = write_edge_list(data_frame_with_deltas, "test.csv")
 
-print("complete")
+df = data_frame_with_deltas
+
+A = sp.coo_matrix((df['delta'].values, (df['rtCode'].values, df['ptCode'].values)))
+#A = A.toarray() 
+eig_val, eig_vec = sp.linalg.eigs(A, k = 1, which='LR')
+
 
 #%%
-
-import matplotlib.pyplot as plt
 plt.figure()
-plt.hist(data_frame_with_deltas['delta'].values)
-plt.savefig('test.png')
+plt.imshow(A.toarray())
+plt.savefig("sparse.png")
+
+plt.figure()
+plt.plot(eig_vec, '.')
+plt.savefig("eigvec.png")
+#%%
+# g = pp.Network()
+# g.read_edges("test.csv", weighted = True, directed = True, header = True)
 
 #%%
+# calculate the adjacency matrix from the edgelist
+#%%
+# print(f)
+print("complete")
