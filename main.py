@@ -76,14 +76,9 @@ plt.imshow(A.toarray())
 plt.savefig("sparse.png")
 
 plt.figure()
-plt.plot(eig_vec, '.')
+plt.plot(eig_vec, '+')
 plt.savefig("eigvec.png")
-#%%
-# g = pp.Network()
-# g.read_edges("test.csv", weighted = True, directed = True, header = True)
-
-#%%
-# calculate the adjacency matrix from the edgelist
+print(np.sum(eig_vec < 0.001))
 #%%
 # print(f)
 print("complete")
