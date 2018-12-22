@@ -10,7 +10,8 @@ import numpy as np
 import scipy.sparse as sp
 # from  sklearn.metrics.pairwise import cosine_similarity
 
-from TradeFlowData import TradeFlowData
+from TradeFlow import TradeFlow
+from Algorithms import cosine_similarity
 
 
 
@@ -19,15 +20,15 @@ calculate the eigenvector centrality of the weighted differences in reported tra
 --> should result in more trusted countries receiving a higher centrality
 """
 
-def cosine_similarity(X, Y):
-    """
-    calculate the cosine similarity of two vectors X and Y
-    :param X: vector of shape (M, N)
-    :param Y: vector of shape (M, N)
-    :return : cosine similarity of X and Y 
-    """
-    assert X.shape == Y.shape
-    return np.sum(np.dot(X.T, Y)) / (np.linalg.norm(X) * np.linalg.norm(Y))
+# def cosine_similarity(X, Y):
+#     """
+#     calculate the cosine similarity of two vectors X and Y
+#     :param X: vector of shape (M, N)
+#     :param Y: vector of shape (M, N)
+#     :return : cosine similarity of X and Y 
+#     """
+#     assert X.shape == Y.shape
+#     return np.sum(np.dot(X.T, Y)) / (np.linalg.norm(X) * np.linalg.norm(Y))
 
 #%%
 def read_normalized_data(filename):
@@ -64,35 +65,8 @@ def write_edge_list(df, edge_filename):
     return df[['rtCode', 'ptCode', 'delta']]
 
 
-data = TradeFlowData()
+data = TradeFlow()
 data.readType1('data/maize/56.2013 basicVal.csv')
 data.removeIncompleteData()
-#%%
-"""
-data_frame_with_deltas = read_normalized_data("56.2013 basicVal.csv")
-edges = write_edge_list(data_frame_with_deltas, "test.csv")
+data.calculateNewColumn(cosine_similarity, 'delta')
 
-df = data_frame_with_deltas
-
-A = sp.coo_matrix((df['delta'].values, (df['rtCode'].values, df['ptCode'].values)))
-#A = A.toarray() 
-eig_val, eig_vec = sp.linalg.eigs(A, k = 1, which='LR')
-"""
-
-
-
-
-"""
-#%%
-plt.figure()
-plt.imshow(A.toarray())
-plt.savefig("sparse.png")
-
-plt.figure()
-plt.plot(eig_vec, '+')
-plt.savefig("eigvec.png")
-print(np.sum(eig_vec < 0.001))
-#%%
-# print(f)
-print("complete")
-"""
