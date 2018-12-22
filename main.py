@@ -10,6 +10,9 @@ import numpy as np
 import scipy.sparse as sp
 # from  sklearn.metrics.pairwise import cosine_similarity
 
+from TradeFlowData import TradeFlowData
+
+
 
 """
 calculate the eigenvector centrality of the weighted differences in reported trade volume 
@@ -59,7 +62,13 @@ def write_edge_list(df, edge_filename):
     """
     df.to_csv(edge_filename, index = False, columns = ['rtCode', 'ptCode', 'delta'])
     return df[['rtCode', 'ptCode', 'delta']]
+
+
+data = TradeFlowData()
+data.readType1('data/maize/56.2013 basicVal.csv')
+data.removeIncompleteData()
 #%%
+"""
 data_frame_with_deltas = read_normalized_data("56.2013 basicVal.csv")
 edges = write_edge_list(data_frame_with_deltas, "test.csv")
 
@@ -68,8 +77,12 @@ df = data_frame_with_deltas
 A = sp.coo_matrix((df['delta'].values, (df['rtCode'].values, df['ptCode'].values)))
 #A = A.toarray() 
 eig_val, eig_vec = sp.linalg.eigs(A, k = 1, which='LR')
+"""
 
 
+
+
+"""
 #%%
 plt.figure()
 plt.imshow(A.toarray())
@@ -82,3 +95,4 @@ print(np.sum(eig_vec < 0.001))
 #%%
 # print(f)
 print("complete")
+"""
