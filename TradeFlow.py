@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+
+
 class TradeFlow(object):
     """
     Class which stores tradeflow data and allow manipulation on that data
