@@ -8,7 +8,6 @@ import pathpy as pp
 import pandas as pd
 import numpy as np
 import scipy.sparse as sp
-# from  sklearn.metrics.pairwise import cosine_similarity
 
 from TradeFlow import TradeFlow
 from Algorithms import cosine_similarity

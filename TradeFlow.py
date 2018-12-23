@@ -73,5 +73,5 @@ class TradeFlow(object):
                 new_column[i] = func(country_1[i], country_2[i])
             self.data[_key][newColumnName] = new_column
 
-    def asEdgeList(self, headers):
+    def asEdgeList(self, weights):
         pass
