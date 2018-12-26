@@ -64,6 +64,8 @@ def write_edge_list(df, edge_filename):
     return df[['rtCode', 'ptCode', 'delta']]
 
 
+
+
 data = TradeFlow()
 data.readType1('data/maize/56.2013 basicVal.csv')
 data.removeIncompleteData()

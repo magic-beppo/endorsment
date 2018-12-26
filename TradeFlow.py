@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import scipy.sparse as sp
 
 
 class TradeFlow(object):
@@ -18,6 +19,8 @@ class TradeFlow(object):
 
     def __init__(self):
         self.data = {} # safe data in a dictionary with a tuple as keys: key: (product, year)
+        self.eigvec = {} #storage for the largest eigenvectors of a data set
+        self.eigval ={} #storage for the largest eigenvalues of a data set
 
     def readType1(self, filepath):
         """
@@ -73,5 +76,19 @@ class TradeFlow(object):
                 new_column[i] = func(country_1[i], country_2[i])
             self.data[_key][newColumnName] = new_column
 
-    def asEdgeList(self, weights):
-        pass
+    def writeEdgeList(self, key, filename, column='delta'):
+        self.data[key][['NW_M', 'TV_M', 'UV_M']].to_csv(index = False)
+
+
+    def asSparse(self, key, column='delta'):
+        V = self.data[key][column]
+        I = self.data[key]['rtCode']
+        J = self.data[key]['ptCode']
+        return sp.coo_matrix((V, (I,J)))
+
+    def asArray(self, key, column='delta'):
+        return self.asSparse(key, column).toarray()
+
+    def Eigenvalues(self, column='delta'):
+        for _key in self.data.keys():
+            self.eigval[_key], self.eigvec[_key] = sp.linalg.eigs(self.asSparse(_key, column), k=1)
