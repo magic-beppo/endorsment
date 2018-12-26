@@ -77,7 +77,7 @@ class TradeFlow(object):
             self.data[_key][newColumnName] = new_column
 
     def writeEdgeList(self, key, filename, column='delta'):
-        self.data[key][['NW_M', 'TV_M', 'UV_M']].to_csv(filename, index = False)
+        self.data[key][['rtCode', 'ptCode', column]].to_csv(filename, index = False)
 
 
     def asSparse(self, key, column='delta'):
