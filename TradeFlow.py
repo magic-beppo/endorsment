@@ -10,11 +10,11 @@ class TradeFlow(object):
 
     """
     TODO:
+        -- write documentation
         -- read from two types of input files
         -- read attributes (possibly write a config file)
-        -- write to hdf5 for longterm storage and usage ??
+        -- possibly write to hdf5 for longterm storage and usage ??
         -- accessabilty
-        -- export to edgelist
     """
 
     def __init__(self):
