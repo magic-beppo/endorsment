@@ -91,4 +91,7 @@ class TradeFlow(object):
 
     def Eigenvalues(self, column='delta'):
         for _key in self.data.keys():
-            self.eigval[_key], self.eigvec[_key] = sp.linalg.eigs(self.asSparse(_key, column), k=1)
+            temp_eigval, temp_eigvec = sp.linalg.eigs(self.asSparse(_key, column), k=1)[0:2]
+            self.eigval[_key] = temp_eigval
+            self.eigvec[_key] = temp_eigvec
+            
